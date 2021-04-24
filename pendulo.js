@@ -1,7 +1,7 @@
-const width = 700;
-const height = 500;
+const width = 900;
+const height = 700;
 
-const g = 1;
+let g = $("#gravidade_input").val();
 
 function cria_pendulo(x0, y0, comprimento, a, m, a_inicial) {
     return {
@@ -23,6 +23,7 @@ let p1, p2;
 let lista_pendulos = [];
 
 let canvas;
+var data, chart;
 
 function setup() {
     createCanvas(width, height);
@@ -32,9 +33,46 @@ function setup() {
 
     lista_pendulos.push(p1);
     lista_pendulos.push(p2);
+
+    google.charts.load('current', { 'packages': ['line'] });
+    google.charts.setOnLoadCallback(drawChart);
+
+    function drawChart() {
+
+        data = google.visualization.arrayToDataTable([
+            ['Tempo', 'Acel. Ang p 1', 'Acel. Ang p. 2'],
+            [0, 0, 0]
+        ]);
+
+
+        var options = {
+            chart: {
+                title: 'Box Office Earnings in First Two Weeks of Opening',
+                subtitle: 'in millions of dollars (USD)'
+            },
+            width: 900,
+            height: 500,
+            axes: {
+                x: {
+                    0: { side: 'top' }
+                }
+            }
+        };
+
+        chart = new google.charts.Line(document.getElementById('curve_chart'));
+        chart.draw(data, google.charts.Line.convertOptions(options));
+    }
+
+
 }
 
+
 function draw() {
+    g = $("#gravidade_input").val();
+    p1.m = $("#m1_input").val();
+    p2.m = $("#m2_input").val();
+    p1.comprimento = $("#c1_input").val();
+    p2.comprimento = $("#c2_input").val();
 
     background(255);
     stroke(0);
@@ -64,5 +102,13 @@ function draw() {
     for (var p of lista_pendulos) {
         p.at_v_angular();
         p.at_a();
+    }
+    
+    if (data) {
+        if (data.Vf.length > 200) {
+            data.Vf.shift();
+        }
+        data.addRow([window.performance.now()/1000, p1.a_angular, p2.a_angular]);
+        chart.draw(data);
     }
 }
