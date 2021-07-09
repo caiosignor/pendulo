@@ -34,34 +34,34 @@ function setup() {
     lista_pendulos.push(p1);
     lista_pendulos.push(p2);
 
-    google.charts.load('current', { 'packages': ['line'] });
-    google.charts.setOnLoadCallback(drawChart);
+    // google.charts.load('current', { 'packages': ['line'] });
+    // google.charts.setOnLoadCallback(drawChart);
 
-    function drawChart() {
+    // function drawChart() {
 
-        data = google.visualization.arrayToDataTable([
-            ['Tempo', 'Acel. Ang p 1', 'Acel. Ang p. 2'],
-            [0, 0, 0]
-        ]);
+    //     data = google.visualization.arrayToDataTable([
+    //         ['Tempo', 'Acel. Ang p 1', 'Acel. Ang p. 2'],
+    //         [0, 0, 0]
+    //     ]);
 
 
-        var options = {
-            chart: {
-                title: 'Box Office Earnings in First Two Weeks of Opening',
-                subtitle: 'in millions of dollars (USD)'
-            },
-            width: 900,
-            height: 500,
-            axes: {
-                x: {
-                    0: { side: 'top' }
-                }
-            }
-        };
+    //     var options = {
+    //         chart: {
+    //             title: 'Box Office Earnings in First Two Weeks of Opening',
+    //             subtitle: 'in millions of dollars (USD)'
+    //         },
+    //         width: 900,
+    //         height: 500,
+    //         axes: {
+    //             x: {
+    //                 0: { side: 'top' }
+    //             }
+    //         }
+    //     };
 
-        chart = new google.charts.Line(document.getElementById('curve_chart'));
-        chart.draw(data, google.charts.Line.convertOptions(options));
-    }
+    //     chart = new google.charts.Line(document.getElementById('curve_chart'));
+    //     chart.draw(data, google.charts.Line.convertOptions(options));
+    // }
 
 
 }
@@ -104,11 +104,11 @@ function draw() {
         p.at_a();
     }
     
-    if (data) {
-        if (data.Vf.length > 200) {
-            data.Vf.shift();
-        }
-        data.addRow([window.performance.now()/1000, p1.a_angular, p2.a_angular]);
-        chart.draw(data);
-    }
+    // if (data) {
+    //     if (data.Vf.length > 200) {
+    //         data.Vf.shift();
+    //     }
+    //     data.addRow([window.performance.now()/1000, p1.a_angular, p2.a_angular]);
+    //     chart.draw(data);
+    // }
 }
